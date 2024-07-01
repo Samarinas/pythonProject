@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acesso de Funcionários - Prefeitura de Jaraguá do Sul</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #006400;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+        }
+        .form, .data-table {
+            background-color: #f9f9f9;
+            border: 1px solid #dddddd;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+        .form h3, .data-table h3 {
+            color: #006400;
+        }
+        .form input, .form button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+        }
+        .form button {
+            background-color: #006400;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .form button:hover {
+            background-color: #004d00;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #dddddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #006400;
+            color: white;
+        }
+        .footer {
+            background-color: #f1f1f1;
+            color: #333333;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Acesso de Funcionários - Prefeitura de Jaraguá do Sul</h1>
+    </div>
+    <div class="container">
+        <form action="{{ url_for('func_login') }}" method="POST" class="form">
+            <h3>Login de Funcionário</h3>
+            <input type="text" name="username" placeholder="Usuário" required>
+            <input type="password" name="password" placeholder="Senha" required>
+            <button type="submit">Entrar</button>
+        </form>
+
+        {% if success_message %}
+            <div class="success-message">
+                {{ success_message }}
+            </div>
+        {% endif %}
+
+        {% if cadastros %}
+        <div class="data-table">
+            <h3>Cadastros de Pessoas com Deficiência</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Data de Nascimento</th>
+                        <th>Email</th>
+                        <th>Telefone</th>
+                        <th>Deficiência</th>
+                        <th>Endereço</th>
+                        <th>Laudo Médico</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cadastro in cadastros %}
+                    <tr>
+                        <td>{{ cadastro.nome }}</td>
+                        <td>{{ cadastro.data_nascimento }}</td>
+                        <td>{{ cadastro.email }}</td>
+                        <td>{{ cadastro.telefone }}</td>
+                        <td>{{ cadastro.tipo_deficiencia }}</td>
+                        <td>{{ cadastro.endereco }}</td>
+                        <td><a href="{{ url_for('static', filename='uploads/' + cadastro.laudo_medico) }}" target="_blank">Ver Laudo</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+    <div class="footer">
+        Prefeitura de Jaraguá do Sul - SC - CNPJ: 83.102.459/0001-23 - Rua Walter Marquardt, 1111 - Barra do Rio Molha - 89259-565 - Caixa Postal 421 - Fone: (047) 2106-8000
+    </div>
+</body>
+</html>

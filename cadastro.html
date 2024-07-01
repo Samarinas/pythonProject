@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapeamento e Cadastro de Pessoas com Deficiência em Jaraguá do Sul/SC</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #006400;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+        }
+        .form {
+            background-color: #f9f9f9;
+            border: 1px solid #dddddd;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
+        }
+        .form h3 {
+            color: #006400;
+        }
+        .form input, .form select, .form textarea, .form button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+        }
+        .form button {
+            background-color: #006400;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .form button:hover {
+            background-color: #004d00;
+        }
+        .success-message {
+            color: green;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .footer {
+            background-color: #f1f1f1;
+            color: #333333;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Mapeamento e Cadastro de Pessoas com Deficiência em Jaraguá do Sul/SC</h1>
+    </div>
+    <div class="container">
+        <form action="{{ url_for('login') }}" method="POST" class="form">
+            <h3>Login</h3>
+            <input type="text" name="username" placeholder="Usuário" required>
+            <input type="password" name="password" placeholder="Senha" required>
+            <button type="submit">Entrar</button>
+            <p>Não é cadastrado? <a href="{{ url_for('cadastro') }}">Fazer cadastro</a></p>
+        </form>
+
+        {% if success_message %}
+            <div class="success-message">
+                {{ success_message }}
+            </div>
+        {% endif %}
+
+        <form action="{{ url_for('cadastrar_pcd') }}" method="POST" enctype="multipart/form-data" class="form" id="formCadastro">
+            <h3>Cadastro</h3>
+            <input type="text" name="nome" placeholder="Nome" required>
+            <input type="text" name="data_nascimento" placeholder="Data de Nascimento (dd/mm/aaaa)" required>
+            <input type="email" name="email" placeholder="E-mail" required>
+            <input type="tel" name="telefone" placeholder="Telefone de Contato" required>
+
+            <label>Gênero:</label>
+            <select name="sexo" required>
+                <option value="Masculino">Masculino</option>
+                <option value="Feminino">Feminino</option>
+            </select>
+
+            <label>Tipo de Deficiência:</label>
+            <select name="tipo_deficiencia" required>
+                <option value="Física">Física</option>
+                <option value="Auditiva">Auditiva</option>
+                <option value="Visual">Visual</option>
+                <option value="Mental">Mental</option>
+            </select>
+
+            <textarea name="descricao_deficiencia" placeholder="Descrição da Deficiência"></textarea>
+
+            <input type="text" name="cep" placeholder="CEP" required>
+            <input type="text" name="endereco" placeholder="Endereço" required>
+            <input type="text" name="cidade" placeholder="Cidade" required>
+            <input type="text" name="uf" placeholder="UF" required>
+
+            <label for="laudo_medico">Upload do Laudo Médico:</label>
+            <input type="file" id="laudo_medico" name="laudo_medico" accept=".pdf,.doc,.docx" required>
+
+            <button type="submit">Enviar Cadastro</button>
+        </form>
+    </div>
+    <div class="footer">
+        Prefeitura de Jaraguá do Sul - SC - CNPJ: 83.102.459/0001-23 - Rua Walter Marquardt, 1111 - Barra do Rio Molha - 89259-565 - Caixa Postal 421 - Fone: (047) 2106-8000
+    </div>
+</body>
+</html>
